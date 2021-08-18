@@ -252,7 +252,7 @@ set termguicolors             " enable true color support
 let ayucolor="light"          " for light version of theme
 " let ayucolor="mirage"       " for mirage version of theme
 " let ayucolor="dark"         " for dark version of theme
-colorscheme snazzy
+" colorscheme snazzy
 let g:SnazzyTransparent=0   " 设置透明效果0/1
 set background=dark
 let g:airline_theme='base16_dracula'
