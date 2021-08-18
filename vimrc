@@ -7,10 +7,10 @@
 " ===
 set nocompatible   " 不兼容 Vi
 filetype on
-filetype indent on " 开启文件类型检查  
+filetype indent on " 开启文件类型检查
 filetype plugin on
 filetype plugin indent on
-set mouse=a        " 支持鼠标 
+set mouse=a        " 支持鼠标
 set encoding=utf-8
 set clipboard=unnamed
 set showmode       " 显示模式
@@ -111,7 +111,7 @@ map <LEADER>/ :!
 map <LEADER>R :r !
 map <LEADER>sr :%s/
 
-" Disabling the default s key 
+" Disabling the default s key
 map s <nop>       " 屏蔽s
 
 " Save & quit
