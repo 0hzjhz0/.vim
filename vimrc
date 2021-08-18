@@ -190,31 +190,7 @@ map tml :+tabmove<CR>
 map <LEADER><LEADER> <Esc>/<++><CR>:nohlsearch<CR>c4l
 
 " Compile function
-map r :call CompileRunGcc()<CR>
-func! CompileRunGcc()
-  exec "w"
-  if &filetype == 'c'
-    exec "!g++ % -o %<"
-    exec "!time ./%<"
-  elseif &filetype == 'cpp'
-    exec "!g++ % -o %<"
-    exec "!time ./%<"
-  elseif &filetype == 'java'
-    exec "!javac %"
-    exec "!time java %<"
-  elseif &filetype == 'sh'
-    :!time bash %
-  elseif &filetype =='python'
-    silent! exec "!clear"
-    exec "!time python3 %"
-  elseif &filetype == 'html'
-    exec "!firefox % &"
-  elseif &filetype == 'markdown'
-    exec "MarkdownPreview"
-  elseif &filetype =='vimwiki'
-    exec "MarkdwonPreview"
-  endif
-endfunc
+
 
 
 "===
@@ -226,6 +202,8 @@ call plug#begin('~/.vim/plugged')
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'connorholyday/vim-snazzy'
+Plug 'morhetz/gruvbox'
+Plug 'ajmwagar/vim-deus'
 Plug 'ayu-theme/ayu-vim'
 Plug 'bling/vim-bufferline'
 
@@ -247,37 +225,36 @@ Plug 'w0rp/ale'
 Plug 'mbbill/undotree/'
 
 " Other visual enhancement
-Plug 'nathanaelkane/vim-indent-guides'
-Plug 'itchyny/vim-cursorword'
-Plug 'tmhedberg/SimpylFold'
+" Plug 'nathanaelkane/vim-indent-guides'
+" Plug 'itchyny/vim-cursorword'
+" Plug 'tmhedberg/SimpylFold'
 
 " Git
-Plug 'rhysd/conflict-marker.vim'
-Plug 'tpope/vim-fugitive'
-Plug 'mhinz/vim-signify'
-Plug 'gisphm/vim-gitignore', { 'for': ['gitignore', 'vim-plug'] }
+" Plug 'rhysd/conflict-marker.vim'
+" Plug 'tpope/vim-fugitive'
+" Plug 'mhinz/vim-signify'
+" Plug 'gisphm/vim-gitignore', { 'for': ['gitignore', 'vim-plug'] }
 
 " Bookmarks
-Plug 'kshenoy/vim-signature'
+" Plug 'kshenoy/vim-signature'
 
 " Dependencies
-Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'kana/vim-textobj-user'
-Plug 'fadein/vim-FIGlet'
+" Plug 'MarcWeber/vim-addon-mw-utils'
+" Plug 'kana/vim-textobj-user'
+" Plug 'fadein/vim-FIGlet'
 
 call plug#end()
 
 "===
 "=== dress op my vim
 "===
-set termguicolors           " enable true color support
-let ayucolor="light"        " for light version of theme
+set termguicolors             " enable true color support
+let ayucolor="light"          " for light version of theme
 " let ayucolor="mirage"       " for mirage version of theme
 " let ayucolor="dark"         " for dark version of theme
 colorscheme snazzy
 let g:SnazzyTransparent=0   " 设置透明效果0/1
 set background=dark
-" let g:airline_theme='dracula'
 let g:airline_theme='base16_dracula'
 
 let g:lightline = {
