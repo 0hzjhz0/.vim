@@ -16,11 +16,11 @@ set clipboard=unnamed
 set showmode       " 显示模式
 
 " Prevent incorrect backgroud rendering in st
-" let &t_ut=''      
+" let &t_ut=''
 let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
 
-" === 
+" ===
 " === Main code display
 " ===
 set number         " 显示行号
@@ -35,17 +35,18 @@ set linebreak      " 不在单词内部发生折行
 " === Editor behavior
 " ===
 " Better tab
-set expandtab      " 将Tab键转为空格 
-set tabstop=2      " 按下Tab键，Vim显示的空格数
-set shiftwidth=2   " 在文本上按下>>,<<,==(增减一级缩进，取消缩进)时，每级字符数
-set softtabstop=2  " Tab键转为几个空格
+set noexpandtab    " 不将Tab键转为空格 
+set tabstop=4      " 按下Tab键，Vim显示的空格数
+set shiftwidth=4   " 在文本上按下>>,<<,==(增减一级缩进，取消缩进)时，每级字符数
+set softtabstop=4  " Tab键转为几个空格
 set list
-set listchars=tab:▸\ ,trail:▫
+" set listchars=tab:▸\ ,trail:▫
+set listchars=tab:\|\ ,trail:▫
 set scrolloff=5    " 垂直滚动时，光标句顶部/底部的位置
 
 " Prevent auto line split
 set wrap           " 自动折行
-set tw=0           " 设置行宽，一行显示几个字符 
+set tw=0           " 设置行宽，一行显示几个字符
 
 set indentexpr=
 " Beter backspace
@@ -57,9 +58,6 @@ set foldlevel=99
 " Cursor style in st
 let &t_SI = "\e[6 q"
 let &t_EI = "\e[2 q"
-" let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-" let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-" let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
 " ===
 " === Window behaviors
@@ -99,48 +97,40 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 " === Basic Mappings
 " ===
 
-" Set <LEADER> as <SPACE>
+" Open the vimrc file anytime
+noremap <LEADER>rc :e ~/.vim/vimrc<CR>
+
+" Set <LEADER> as <SPACE>, ; as :
 let mapleader=" "
-
-" Cursor backward <C-o>, forward <C-i>
-
-" Column (:) mods
 map ; :
 map q;  q:        " 显示历史命令记录
-map <LEADER>/ :!
-map <LEADER>R :r !
-map <LEADER>sr :%s/
 
-" Disabling the default s key
-map s <nop>       " 屏蔽s
+" Cursor backward <C-o>, forward <C-i>
 
 " Save & quit
 map Q :q<CR>
 map S :w<CR>
+map s <nop>       " 屏蔽s
+map R :source $MYVIMRC<CR>
 
-" Open the vimrc file anytime
-map <LEADER>rc :e ~/.vim/vimrc<CR>
 
 " Copy to system clipboard
-vnoremap Y :w !xclip -i -sel c<CR>
+vnoremap Y "+y
 
-" Search
-noremap <LEADER><CR> :nohlsearch<CR>
+" Indentation in normal mode
+nnoremap < <<
+nnoremap > >>
+
+" Search in normal mode
+noremap <LEADER><CR> :nohlsearch<CR>  " 取消高亮
 noremap = nzz      " 下一条搜索结果zz表示让其处于屏幕中心"===
 noremap - Nzz      " 上一条搜索结果"=== 普通模式下键位映射
 
 
 " Duplicate words
-map <LEADER>fc /\(\<\w\+\>\)\_s*\1
+noremap <LEADER>dw /\(\<\w\+\>\)\_s*\1
 
-" Others
-map <LEADER>o o<Esc>k
-
-" ===
-" === Cursor Movement 
-" ===
-
-map R :source $MYVIMRC<CR>
+map <LEADER>o o<Esc>k       " 插入空白行
 
 
 "===
@@ -189,7 +179,8 @@ map tml :+tabmove<CR>
 " Press space twice to jumpy to the next '<++>' and edit it
 map <LEADER><LEADER> <Esc>/<++><CR>:nohlsearch<CR>c4l
 
-" Compile function
+" 打开terminal
+noremap <LEADER>/ :set splitbelow<CR>:split<CR>:res +10<CR>:term<CR>
 
 
 
@@ -199,13 +190,17 @@ map <LEADER><LEADER> <Esc>/<++><CR>:nohlsearch<CR>c4l
 call plug#begin('~/.vim/plugged')
 
 " Pretty dress
+Plug 'ajmwagar/vim-deus'
+Plug 'bling/vim-bufferline'
+
+" Status line
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'connorholyday/vim-snazzy'
-Plug 'morhetz/gruvbox'
-Plug 'ajmwagar/vim-deus'
-Plug 'ayu-theme/ayu-vim'
-Plug 'bling/vim-bufferline'
+Plug 'dracula/vim'
+
+" General Highlighter
+Plug 'RRethy/vim-illuminate'
+Plug 'RRethy/vim-hexokinase', {'do': 'make hexokinase'}
 
 " File navigation
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
@@ -215,19 +210,16 @@ Plug 'ctrlpvim/ctrlp.vim', { 'on': 'CtrlP' }
 " Taglist
 Plug 'majutsushi/tagbar', { 'on': 'TagbarOpenAutoClose' }
 
-" Error checking
-Plug 'w0rp/ale'
 
 " Auto Complete
 " Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 
+" Snippets
+
+
 " Undo Tree
 Plug 'mbbill/undotree/'
 
-" Other visual enhancement
-" Plug 'nathanaelkane/vim-indent-guides'
-" Plug 'itchyny/vim-cursorword'
-" Plug 'tmhedberg/SimpylFold'
 
 " Git
 " Plug 'rhysd/conflict-marker.vim'
@@ -235,13 +227,14 @@ Plug 'mbbill/undotree/'
 " Plug 'mhinz/vim-signify'
 " Plug 'gisphm/vim-gitignore', { 'for': ['gitignore', 'vim-plug'] }
 
-" Bookmarks
 " Plug 'kshenoy/vim-signature'
 
-" Dependencies
-" Plug 'MarcWeber/vim-addon-mw-utils'
-" Plug 'kana/vim-textobj-user'
-" Plug 'fadein/vim-FIGlet'
+" Editor Enhancement
+Plug 'Yggdroot/indentLine'
+
+
+" Other visual enhancement
+Plug 'luochen1990/rainbow'
 
 call plug#end()
 
@@ -249,34 +242,66 @@ call plug#end()
 "=== dress op my vim
 "===
 set termguicolors             " enable true color support
-let ayucolor="light"          " for light version of theme
-" let ayucolor="mirage"       " for mirage version of theme
-" let ayucolor="dark"         " for dark version of theme
-" colorscheme snazzy
-let g:SnazzyTransparent=0   " 设置透明效果0/1
-set background=dark
-let g:airline_theme='base16_dracula'
+" set background=dark
 
-let g:lightline = {
-\     'active': {
-\         'left': [['mode', 'paste' ], ['readonly', 'filename', 'modified']],
-\         'right': [['lineinfo'], ['percent'], ['fileformat', 'fileencoding']]
-\     }
-\ }
+colorscheme deus
 
+hi NonText ctermfg=gray guifg=grey10
+" hi SpecialKey ctermfg=black guifg=grey0
+" set linespace=12
+" =================== 开始设置插件 ==================
+
+" ===
+" === vim-airline
+" ===
+let g:airline_powerline_fonts = 0
+let g:airline_theme='dracula'
+"let g:airline_theme='base16_dracula'
+
+" Show buffers count
+let g:airline#extensions#tabline#buffer_nr_show=1
+
+" ===
+" === indentLine
+" ===
+let g:indentLine_enabled = 0
+"let g:indentLine_color_term = 1
 
 " ===
 " === NERDTree
 " ===
-map tt :NERDTreeToggle<CR>
-let NERDTreeMapOpenExpl = ""
-let NERDTreeMapUpdir = ""
-let NERDTreeMapUpdirKeepOpen = "l"
-let NERDTreeMapOpenSplit = ""
-let NERDTreeOpenVSplit = ""
-let NERDTreeMapActivateNode = "i"
-let NERDTreeMapOpenInTab = "o"
-let NERDTreeMapPreview = ""
-let NERDTreeMapCloseDir = "n"
-let NERDTreeMapChangeRoot = "y"
 
+
+" ===
+" === rainbow
+" ===
+let g:rainbow_active = 1
+
+
+" ================= 结束设置插件 ====================
+
+" ===
+" === Terminal Colors
+" ===
+
+let g:terminal_color_0 = '#000000'
+let g:terminal_color_1 = '#FF5555'
+let g:terminal_color_2 = '#50FA7B'
+let g:terminal_color_3 = '#F1FA8C'
+let g:terminal_color_4 = '#BD93F9'
+let g:terminal_color_5 = '#FF79C6'
+let g:terminal_color_6 = '#8BE9FD'
+let g:terminal_color_7 = '#BFBFBF'
+let g:terminal_color_8 = '#4D4D4D'
+let g:terminal_color_9 = '#FF6E67'
+let g:terminal_color_10 = '#5AF78E'
+let g:terminal_color_11 = '#F4F99D'
+let g:terminal_color_12 = '#CAA9FA'
+let g:terminal_color_13 = '#FF92D0'
+let g:terminal_color_14 = '#9AEDFE'
+
+
+" ===
+" === Necessary Commands to Execute
+" ===
+" exec "nohlsearch"
